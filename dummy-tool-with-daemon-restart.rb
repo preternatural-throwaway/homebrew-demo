@@ -1,9 +1,9 @@
 class DummyToolWithDaemonRestart < Formula
   desc "DummyToolWithDaemonRestart CLI Tool"
   homepage "https://github.com/preternatural-throwaway/homebrew-demo"
-  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-with-daemon-restart-0.0.2/final-artifact.zip"
-  sha256 "5e414824707c0350252f1fc8b0f01f61c8f693a4385d3f8c7caa53af0844be29"
-  version "0.0.2"
+  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-with-daemon-restart-0.0.3/final-artifact.zip"
+  sha256 "8ef0d79189878fab61478671464e297d1c725703cfbef5dbf2a6d0c00116c6b3"
+  version "0.0.3"
 
   def install
     # Unzip the main artifact bundle
@@ -39,9 +39,9 @@ class DummyToolWithDaemonRestart < Formula
     ohai "Checking if restart-dummy-tool-d is already running as root..."
 
     # Check if restart-dummy-tool-d is running as root
-    restart-dummy-tool-d_running_as_root = `ps aux | grep restart-dummy-tool-d | grep -v grep | grep root`.strip.length > 0
+    running_as_root = `ps aux | grep restart-dummy-tool-d | grep -v grep | grep root`.strip.length > 0
 
-    if restart-dummy-tool-d_running_as_root
+    if running_as_root
       ohai "restart-dummy-tool-d is already running as root, restarting with bootstrap restart..."
       system "dummy-tool-with-daemon-restart bootstrap restart"
       ohai "dummy-tool-with-daemon-restart daemon restarted successfully!"
