@@ -1,9 +1,9 @@
 class DummyToolWithDaemonRestart < Formula
   desc "DummyToolWithDaemonRestart CLI Tool"
   homepage "https://github.com/preternatural-throwaway/homebrew-demo"
-  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-with-daemon-restart-0.0.1/final-artifact.zip"
-  sha256 "360e291a10b634e85fba8ce591025b3997602f3682bb5d05b09d22a168d5cfe0"
-  version "0.0.1"
+  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-with-daemon-restart-0.0.2/final-artifact.zip"
+  sha256 "5e414824707c0350252f1fc8b0f01f61c8f693a4385d3f8c7caa53af0844be29"
+  version "0.0.2"
 
   def install
     # Unzip the main artifact bundle
@@ -36,23 +36,34 @@ class DummyToolWithDaemonRestart < Formula
       return
     end
 
-    ohai "Starting the dummy-tool-with-daemon-restart daemon service..."
-    ohai "Installation of the daemon requires sudo access. Please enter your password in the system popup."
+    ohai "Checking if restart-dummy-tool-d is already running as root..."
 
-    # Use AppleScript to prompt for admin rights safely
-    script = <<~APPLESCRIPT
-      do shell script "brew services start dummy-tool-with-daemon-restart" with administrator privileges
-    APPLESCRIPT
-    
-    system "osascript", "-e", script
-    
-    unless $?.success?
-      opoo "Failed to start the dummy-tool-with-daemon-restart daemon service."
-      ohai "You can manually start it later with: sudo brew services start dummy-tool-with-daemon-restart"
+    # Check if restart-dummy-tool-d is running as root
+    restart-dummy-tool-d_running_as_root = `ps aux | grep restart-dummy-tool-d | grep -v grep | grep root`.strip.length > 0
+
+    if restart-dummy-tool-d_running_as_root
+      ohai "restart-dummy-tool-d is already running as root, restarting with bootstrap restart..."
+      system "dummy-tool-with-daemon-restart bootstrap restart"
+      ohai "dummy-tool-with-daemon-restart daemon restarted successfully!"
     else
-      ohai "dummy-tool-with-daemon-restart daemon service started successfully!"
-      ohai "You can stop the daemon using `sudo brew services stop dummy-tool-with-daemon-restart`"
-      ohai "You can restart the daemon using `sudo brew services restart dummy-tool-with-daemon-restart`"
+      ohai "Starting the dummy-tool-with-daemon-restart daemon service..."
+      ohai "Installation of the daemon requires sudo access. Please enter your password in the system popup."
+
+      # Use AppleScript to prompt for admin rights safely
+      script = <<~APPLESCRIPT
+        do shell script "brew services start dummy-tool-with-daemon-restart" with administrator privileges
+      APPLESCRIPT
+
+      system "osascript", "-e", script
+
+      unless $?.success?
+        opoo "Failed to start the dummy-tool-with-daemon-restart daemon service."
+        ohai "You can manually start it later with: sudo brew services start dummy-tool-with-daemon-restart"
+      else
+        ohai "dummy-tool-with-daemon-restart daemon service started successfully!"
+        ohai "You can stop the daemon using `sudo brew services stop dummy-tool-with-daemon-restart`"
+        ohai "You can restart the daemon using `sudo brew services restart dummy-tool-with-daemon-restart`"
+      end
     end
   end
 
