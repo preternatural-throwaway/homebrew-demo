@@ -1,9 +1,9 @@
 class DummyToolWithDaemonRestart < Formula
   desc "DummyToolWithDaemonRestart CLI Tool"
   homepage "https://github.com/preternatural-throwaway/homebrew-demo"
-  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-with-daemon-restart-0.0.3/final-artifact.zip"
-  sha256 "8ef0d79189878fab61478671464e297d1c725703cfbef5dbf2a6d0c00116c6b3"
-  version "0.0.3"
+  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-with-daemon-restart-0.0.4/final-artifact.zip"
+  sha256 "1b287b2ef5284c7a7832b4784409646156616852dc272e30dabf897716cffb1d"
+  version "0.0.4"
 
   def install
     # Unzip the main artifact bundle
