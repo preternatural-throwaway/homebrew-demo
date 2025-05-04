@@ -1,9 +1,9 @@
 class DummyTool < Formula
   desc "DummyTool CLI Tool"
   homepage "https://github.com/preternatural-throwaway/homebrew-demo"
-  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-0.0.1/final-artifact.zip"
-  sha256 "01a8b126fba1f60f79e237d13fbc23b9b04c14d58c73f5b9d7a1cee0d6d009e7"
-  version "0.0.1"
+  url "https://github.com/preternatural-throwaway/homebrew-demo/releases/download/dummy-tool-0.0.2/final-artifact.zip"
+  sha256 "927f07092f293cde55ad9b79dee03b62d9160c08accfb2bd41763d86cc04a11f"
+  version "0.0.2"
 
   def install
     # Unzip the main artifact bundle
